@@ -60,7 +60,11 @@ public class UserService {
 
     @Transactional
     public void modificaUtente(UserDto userDto) {
-        User user = userRepository.save(userMapper.userDtoToUserEntity(userDto));
+        User user = userRepository.findByCodiceFiscale(userDto.getCodiceFiscale());
+        userMapper.updateEntity(user, userDto);
+        userRepository.save(user);
+
+        addressRepository.deleteAll(addressRepository.findByIdUser(user.getId()));
         addressRepository.saveAll(addressMapper.addressDtoListToAddressEntityList(userDto.getAddress(), user));
     }
 }

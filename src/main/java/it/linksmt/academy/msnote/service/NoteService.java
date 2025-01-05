@@ -53,6 +53,7 @@ public class NoteService {
         note.setUser(user);
         note.setTitle(noteDto.getTitle());
         note.setBody(noteDto.getBody());
+        noteRepository.save(note);
     }
 
     public void eliminaCommento(long id) {
