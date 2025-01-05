@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface NoteMapper {
 
-    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "userFiscalCode", source = "user.codiceFiscale")
     NoteDto noteEntityToNoteDto(Note note);
 
     @Mapping(target = "user", ignore = true)

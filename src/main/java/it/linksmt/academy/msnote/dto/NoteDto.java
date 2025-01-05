@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class NoteDto {
 
-    private long userId;
+    private String userFiscalCode;
     private long id;
     private String title;
     private String body;

@@ -40,7 +40,10 @@ public class NoteService {
     @Transactional
     public void creaCommento(NoteDto noteDto) throws ClassNotFoundException {
         Note note = noteMapper.noteDtoToNoteEntity(noteDto);
-        User user = userRepository.findById(noteDto.getUserId()).orElseThrow(() -> new ClassNotFoundException("Commento non presente all'interno del database"));
+
+        User user = userRepository.findByCodiceFiscale(noteDto.getUserFiscalCode());
+        if (user == null) throw new ClassNotFoundException("Utente non presente all'interno del database");
+
         note.setUser(user);
         note = noteRepository.save(note);
         noteDto.setId(note.getId());
@@ -49,7 +52,10 @@ public class NoteService {
     @Transactional
     public void modificaCommento(NoteDto noteDto) throws ClassNotFoundException {
         Note note = noteRepository.findById(noteDto.getId()).orElseThrow(() -> new ClassNotFoundException("Commento non presente all'interno del database"));
-        User user = userRepository.findById(noteDto.getUserId()).orElseThrow(() -> new ClassNotFoundException("Utente non presente all'interno del database!"));
+
+        User user = userRepository.findByCodiceFiscale(noteDto.getUserFiscalCode());
+        if (user == null) throw new ClassNotFoundException("Utente non presente all'interno del database");
+
         note.setUser(user);
         note.setTitle(noteDto.getTitle());
         note.setBody(noteDto.getBody());
